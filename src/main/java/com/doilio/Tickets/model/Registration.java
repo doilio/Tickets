@@ -1,9 +1,12 @@
 package com.doilio.Tickets.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public record Registration(
         Integer id,
-        Integer productId,
+        @NotNull(message = "Product id is required") Integer productId,
         String ticketCode,
-        String attendeeName
+        @NotBlank(message = "Attende name is required") String attendeeName
 ) {
 }
