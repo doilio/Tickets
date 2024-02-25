@@ -1,6 +1,7 @@
 package com.doilio.Tickets.repository;
 
 import com.doilio.Tickets.model.Registration;
+import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -9,6 +10,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Repository
 public class RegistrationRepository {
 
     private static final AtomicInteger ID_GENERATOR = new AtomicInteger();

@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public class ProductRepository {
 
-    private List<Product> products = List.of(
+    private final List<Product> products = List.of(
             new Product(801, 101, "Staff", "Free Access to Collaborators", new BigDecimal("0.0")),
             new Product(802, 502, "Normal", "Normal Price", new BigDecimal("500.0")),
             new Product(803, 502, "VIP", "Vip Ticket - Includes Welcome Drink", new BigDecimal("1500.0")),
