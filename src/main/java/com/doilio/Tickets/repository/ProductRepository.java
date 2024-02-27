@@ -1,15 +1,18 @@
 package com.doilio.Tickets.repository;
 
 import com.doilio.Tickets.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Repository
-public class ProductRepository {
 
-    private final List<Product> products = List.of(
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+
+    List<Product> findByEventId(int eventId);
+
+/*    private final List<Product> products = List.of(
             new Product(801, 101, "Staff", "Free Access to Collaborators", new BigDecimal("0.0")),
             new Product(802, 502, "Normal", "Normal Price", new BigDecimal("500.0")),
             new Product(803, 502, "VIP", "Vip Ticket - Includes Welcome Drink", new BigDecimal("1500.0")),
@@ -20,5 +23,5 @@ public class ProductRepository {
 
     public List<Product> findByEventId(int eventId) {
         return products.stream().filter(product -> product.eventId() == eventId).toList();
-    }
+    }*/
 }

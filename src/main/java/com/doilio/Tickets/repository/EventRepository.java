@@ -3,6 +3,7 @@ package com.doilio.Tickets.repository;
 import com.doilio.Tickets.model.Event;
 import com.doilio.Tickets.model.Organizer;
 import com.doilio.Tickets.model.Venue;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -10,9 +11,12 @@ import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public class EventRepository {
 
+public interface EventRepository extends JpaRepository<Event, Integer> {
+
+    List<Event> findByOrganizerId(int organizerId);
+
+/*
     private final List<Event> events = List.of(
             new Event(501, "Blue Move",
                     new Organizer(101, "Guyzel Ramos", "Guyzel Producoes"),
@@ -31,6 +35,7 @@ public class EventRepository {
                     LocalDate.of(2024, Month.APRIL, 30))
     );
 
+
     public List<Event> findByOrganizerId(int organizerId) {
         return events.stream().filter(event -> event.organizer().id() == organizerId).toList();
     }
@@ -38,4 +43,6 @@ public class EventRepository {
     public Optional<Event> findById(int id) {
         return events.stream().filter(event -> event.id() == id).findAny();
     }
+
+ */
 }

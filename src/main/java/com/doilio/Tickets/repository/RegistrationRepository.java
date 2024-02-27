@@ -1,6 +1,7 @@
 package com.doilio.Tickets.repository;
 
 import com.doilio.Tickets.model.Registration;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
@@ -10,10 +11,18 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Repository
-public class RegistrationRepository {
 
-    private static final AtomicInteger ID_GENERATOR = new AtomicInteger();
+public interface RegistrationRepository extends MongoRepository<Registration, String> {
+
+    // No need to write a create or update code because the interface already gives u that
+
+    Optional<Registration> findByTicketCode(String ticketCode);
+
+    void deleteByTicketCode(String ticketCode);
+
+
+
+/*    private static final AtomicInteger ID_GENERATOR = new AtomicInteger();
 
     private final Map<String, Registration> registrationByTicketCode = new ConcurrentHashMap<>();
 
@@ -48,5 +57,5 @@ public class RegistrationRepository {
 
     public void deleteByTicketCode(String ticketCode) {
         registrationByTicketCode.remove(ticketCode);
-    }
+    }*/
 }
