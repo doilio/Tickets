@@ -1,5 +1,6 @@
 package com.doilio.tickets.controller;
 
+import com.doilio.tickets.client.EventsClient;
 import com.doilio.tickets.model.Event;
 import com.doilio.tickets.model.Product;
 import com.doilio.tickets.model.Registration;
@@ -17,29 +18,18 @@ import java.util.UUID;
 @RequestMapping(value = "/registrations")
 public class RegistrationController {
 
-    private final WebClient webClient;
+    private final EventsClient eventsClient;
     private final RegistrationRepository registrationRepository;
 
-    public RegistrationController(WebClient webClient, RegistrationRepository registrationRepository) {
-        this.webClient = webClient;
+    public RegistrationController(EventsClient eventsClient, RegistrationRepository registrationRepository) {
+        this.eventsClient = eventsClient;
         this.registrationRepository = registrationRepository;
     }
 
     @PostMapping
     public Registration create(@RequestBody Registration registration) {
-        Product product = webClient.get()
-                .uri("/products/{id}", registration.productId())
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .retrieve()
-                .bodyToMono(Product.class)
-                .block();
-        // TODO: Get product and event from event-service
-        Event event = webClient.get()
-                .uri("/events/{id}", product.eventId())
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .retrieve()
-                .bodyToMono(Event.class)
-                .block();
+        Product product = eventsClient.getProductById(registration.productId());
+        Event event = eventsClient.getEventById(product.eventId());
 
         String ticketCode = UUID.randomUUID().toString();
 
@@ -73,7 +63,7 @@ public class RegistrationController {
         // Only update the attendee name
         return registrationRepository.save(
                 new Registration(
-                        existing.id(), existing.productId(),existing.eventName(),existing.amount(), ticketCode, registration.attendeeName()
+                        existing.id(), existing.productId(), existing.eventName(), existing.amount(), ticketCode, registration.attendeeName()
                 ));
     }
 
