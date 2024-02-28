@@ -1,9 +1,15 @@
 package com.doilio.tickets.controller;
 
+import com.doilio.tickets.model.Event;
+import com.doilio.tickets.model.Product;
 import com.doilio.tickets.model.Registration;
 import com.doilio.tickets.repository.RegistrationRepository;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 
+import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -11,18 +17,40 @@ import java.util.UUID;
 @RequestMapping(value = "/registrations")
 public class RegistrationController {
 
+    private final WebClient webClient;
     private final RegistrationRepository registrationRepository;
 
-    public RegistrationController(RegistrationRepository registrationRepository) {
+    public RegistrationController(WebClient webClient, RegistrationRepository registrationRepository) {
+        this.webClient = webClient;
         this.registrationRepository = registrationRepository;
     }
 
     @PostMapping
     public Registration create(@RequestBody Registration registration) {
+        Product product = webClient.get()
+                .uri("/products/{id}", registration.productId())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToMono(Product.class)
+                .block();
+        // TODO: Get product and event from event-service
+        Event event = webClient.get()
+                .uri("/events/{id}", product.eventId())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToMono(Event.class)
+                .block();
+
         String ticketCode = UUID.randomUUID().toString();
 
         return registrationRepository.save(
-                new Registration(null, registration.productId(), ticketCode, registration.attendeeName())
+                new Registration(null,
+                        registration.productId(),
+                        event.name(),
+                        product.price(),
+                        ticketCode,
+                        registration.attendeeName()
+                )
         );
     }
 
@@ -45,7 +73,7 @@ public class RegistrationController {
         // Only update the attendee name
         return registrationRepository.save(
                 new Registration(
-                        existing.id(), existing.productId(), ticketCode, registration.attendeeName()
+                        existing.id(), existing.productId(),existing.eventName(),existing.amount(), ticketCode, registration.attendeeName()
                 ));
     }
 

@@ -16,7 +16,7 @@ public class Product {
     @Column(nullable = false)
     private String name;
     @Column
-    private String descriprion;
+    private String description;
     @Column(nullable = false)
     private BigDecimal price;
 
@@ -44,12 +44,12 @@ public class Product {
         this.name = name;
     }
 
-    public String getDescriprion() {
-        return descriprion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriprion(String descriprion) {
-        this.descriprion = descriprion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getPrice() {
