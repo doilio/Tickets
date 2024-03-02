@@ -2,6 +2,13 @@
 🎫 This is a REST API using the microservices architecture, where we have two microservices in which one is responsible for managing events and the other for managing atendees.
 
 
+## Built With
+
+* [Spring Boot 3](https://spring.io/projects/spring-boot) - A framework that simplifies the process of building and deploying production-ready applications in the Spring ecosystem.
+* [Actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html) - A module that provides all of Spring Boot’s production-ready features.
+* [Spring Web](https://docs.spring.io/spring-boot/docs/current/reference/html/web.html#web) - A module that focuses on providing features and components for developing web applications in a Java environment.
+* [Spring WebFlux](https://docs.spring.io/spring-framework/reference/web/webflux/new-framework.html) - A reactive programming framework designed to handle asynchronous and non-blocking I/O operations, making it well-suited for building scalable and efficient web applications.
+* [Spring Data](https://spring.io/projects/spring-data) - Module that makes it easy to use data access technologies, relational and non-relational databases, map-reduce frameworks, and cloud-based data services.
 
 
 ## Author
