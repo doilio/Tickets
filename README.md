@@ -2,6 +2,21 @@
 🎫 This is a REST API using the microservices architecture, where we have two microservices in which one is responsible for managing events and the other for managing atendees.
 
 
+- The **Registration Service** contains the following endpoints `"http://localhost:8080"`:
+  - POST `/registrations` - Creates a registry.
+  - GET `registrations/{ticketCode}` - Finds a registry by a given ticket code.
+  - PUT `/registrations` - Updates a registry.
+  - DELETE `registrations/{ticketCode}` - Deletes a registry by a given ticket code.
+
+
+- The **Events Service** contains the following endpoints `"http://localhost:8081"`:
+  - GET `/organizers` - 
+  - GET `/events` -
+  - GET `/events/{id}` -
+  - GET `/products` -
+  - GET `/products/{id}` -
+
+
 ## Built With
 
 * [Spring Boot 3](https://spring.io/projects/spring-boot) - A framework that simplifies the process of building and deploying production-ready applications in the Spring ecosystem.
